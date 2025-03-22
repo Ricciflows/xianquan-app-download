@@ -1,33 +1,15 @@
-import { useEffect, useState } from "react";
 import "./App.css";
 import "@ant-design/v5-patch-for-react-19";
 import { Button, ConfigProvider, Image, Typography } from "antd";
-import { ofetch } from "ofetch";
+import Logo from "../public/manitori.png";
+import apk from "../public/弦圈-V0.0.2-正式版.apk?url";
 
 function App() {
-  const [csrfToken, setCsrfToken] = useState("");
-
-  useEffect(() => {
-    ofetch("/api/get_csrf_token/").then((res) => {
-      setCsrfToken(res.csrftoken);
-    });
-  }, []);
-
   const { Title } = Typography;
 
   async function Download() {
-    ofetch(`/apim/MobileAPPVersions/app/download_lastest_app/`, {
-      method: "PATCH",
-      headers: {
-        "X-CSRFToken": csrfToken,
-      },
-      body: {
-        platform: "android",
-      },
-    });
-
     const a = document.createElement("a"); //创建一个<a></a>标签
-    a.href = "/弦圈-V0.0.2-正式版.apk";
+    a.href = apk;
     //给a标签的href属性值加上地址，注意，这里是绝对路径，不用加 点.
     a.download = "弦圈_V0.0.2_正式版.apk";
     //设置下载文件文件名，这里加上.xlsx指定文件类型，pdf文件就指定.fpd即可
@@ -43,7 +25,7 @@ function App() {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <a href="https://www.xianquan.net">
         <Image
-          src="/manitori.png"
+          src={Logo}
           width={300}
           height={100}
           style={{ objectFit: "cover" }}
